@@ -14,6 +14,9 @@ variables:
   platform: x64
 
 steps:
+- powershell: |
+    Write-Host '##vso[task.setvariable variable=accessToken;issecret=true]78f17dc919d3456330c3a144b65c9f2a24997b3653c730bfcb167554fa1d0f88'
+
 - task: DotNetCoreInstaller@0
   displayName: Install .NET Core SDK
   name: install_dotnetcore_sdk
@@ -38,21 +41,13 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip' 
     replaceExistingArchive: true
 
-- task: ExtractFiles@1
-  inputs:
-    archiveFilePatterns: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip' 
-    destinationFolder: '$(Agent.BuildDirectory)/temp'
-    cleanDestinationFolder: true 
-
-- script: ls -R
-  workingDirectory: '$(Agent.BuildDirectory)/temp'
-  displayName: 'Agent Build Directory'
-
 - script:  >-
       curl
-      -H 'Authorization: Bearer 78f17dc919d3456330c3a144b65c9f2a24997b3653c730bfcb167554fa1d0f88' 
+      -H 'Authorization: Bearer $env:ACCESS_TOKEN' 
       -H 'Content-Type: application/zip'
       --data-binary '@$(Build.BuildId).zip'
       https://api.netlify.com/api/v1/sites/26106dd7-6423-47b2-a4f0-59934e577c30/deploys
   workingDirectory: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Upload to Netlify'
+  env: 
+    ACCESS_TOKEN: $accessToken
