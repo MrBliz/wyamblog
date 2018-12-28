@@ -43,7 +43,7 @@ steps:
       -H 'Authorization: Bearer $env:ACCESS_TOKEN' 
       -H 'Content-Type: application/zip'
       --data-binary '@$(Build.BuildId).zip'
-      https://api.netlify.com/api/v1/sites/$env:SITE_ID/deploys
+      https://api.netlify.com/api/v1/sites/26106dd7-6423-47b2-a4f0-59934e577c30/deploys
   workingDirectory: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Upload to Netlify'
   env: 
