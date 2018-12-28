@@ -26,11 +26,22 @@ steps:
       dotnet tool install -g Wyam.Tool
       wyam 
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)' 
+- script: dir
+  workingDirectory: '$(Build.BinariesDirectory)'
+  displayName: 'Binaries Directory'
+
+  
+- script: dir
+  workingDirectory: '$(Agent.BuildDirectory)'
+  displayName: 'Agent Build Directory'
+
+
+
+#- task: ArchiveFiles@2
+  #inputs:
+    #rootFolderOrFile: '$(Build.BinariesDirectory)' 
     #includeRootFolder: true
-    archiveType: 'zip'
+    #archiveType: 'zip'
     #tarCompression: 'gz' # Optional. Options: gz, bz2, xz, none
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip' 
-    replaceExistingArchive: true 
+    #archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip' 
+    #replaceExistingArchive: true
