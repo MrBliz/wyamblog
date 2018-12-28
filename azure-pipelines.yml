@@ -35,9 +35,18 @@ steps:
     rootFolderOrFile: '$(Agent.BuildDirectory)/s/output' 
     includeRootFolder: true
     archiveType: 'zip'
-    #tarCompression: 'gz' # Optional. Options: gz, bz2, xz, none
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip' 
     replaceExistingArchive: true
+
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip' 
+    destinationFolder: '$(Agent.BuildDirectory)/temp'
+    cleanDestinationFolder: true 
+
+- script: ls -R
+  workingDirectory: '$(Agent.BuildDirectory)/temp'
+  displayName: 'Agent Build Directory'
 
 - script:  >-
       curl -X POST https://api.netlify.com/api/v1/sites/26106dd7-6423-47b2-a4f0-59934e577c30/deploys 
