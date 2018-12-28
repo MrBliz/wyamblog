@@ -9,12 +9,14 @@ trigger:
 pool:
   vmImage: 'VS2017-Win2016'
 
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-
 steps:
+- task: DotNetCoreInstaller@0
+  displayName: Install .NET Core SDK
+  name: install_dotnetcore_sdk
+  enabled: true
+  inputs:
+    packageType: 'sdk'
+
 - script: | 
       dotnet tool install -g Wyam.Tool
       wyam 
