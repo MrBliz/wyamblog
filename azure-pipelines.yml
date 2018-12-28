@@ -14,15 +14,6 @@ variables:
   platform: x64
 
 steps:
-- powershell: |
-    Write-Host '##vso[task.setvariable variable=accessToken;issecret=true]78f17dc919d3456330c3a144b65c9f2a24997b3653c730bfcb167554fa1d0f88'
-
-- powershell: |
-    Write-Host "This works: $env:MY_MAPPED_ENV_VAR"
-  env:
-    MY_MAPPED_ENV_VAR: $(accessToken)
-
-
 - task: DotNetCoreInstaller@0
   displayName: Install .NET Core SDK
   name: install_dotnetcore_sdk
@@ -56,4 +47,4 @@ steps:
   workingDirectory: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Upload to Netlify'
   env: 
-    ACCESS_TOKEN: $accessToken
+    ACCESS_TOKEN: $netlifyAccessToken
