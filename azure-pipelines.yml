@@ -47,5 +47,5 @@ steps:
   workingDirectory: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Upload to Netlify'
   env: 
-    ACCESS_TOKEN: $(netlifyAccessToken)
-    SITE_ID: $(netlifySiteId)
+    ACCESS_TOKEN: $netlifyAccessToken
+    SITE_ID: $netlifySiteId
