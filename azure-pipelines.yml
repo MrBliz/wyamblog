@@ -26,12 +26,12 @@ steps:
       dotnet tool install -g Wyam.Tool
       wyam 
 
-- script: dir
+- script: ls
   workingDirectory: '$(Build.BinariesDirectory)'
   displayName: 'Binaries Directory'
 
   
-- script: dir
+- script: ls
   workingDirectory: '$(Agent.BuildDirectory)'
   displayName: 'Agent Build Directory'
 
